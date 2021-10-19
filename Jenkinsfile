@@ -1,5 +1,11 @@
 node {
+    
+  environment {
+    registry = "prathmeshrajmane/dockerwebappt"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
 
+  }
     checkout scm
 
     docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
