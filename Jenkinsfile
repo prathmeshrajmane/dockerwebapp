@@ -11,11 +11,16 @@ pipeline{
                 sh 'cd /c/Users/prajmane/k8s/dockerwebapp'
                 sh 'ls'
                 sh 'docker build -t ${DOCKER_IMAGE} .'
-                def dockerImage = docker.image("${DOCKER_IMAGE}")
-                docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
-                dockerImage.push()
             }
         }
+	stage('Docker Push') {
+    	agent any
+      steps {
+      	withCredentials([usernamePassword(credentialsId: 'docker-cred', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+          sh 'docker push ${DOCKER_IMAGE}'
+        }
+      }
     }
 }
 }
