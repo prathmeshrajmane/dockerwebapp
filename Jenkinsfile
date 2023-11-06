@@ -1,3 +1,16 @@
+pipeline{
+    agent any;
+    stages{
+        stage('run'){
+            steps{
+                sh 'pwd'
+                sh 'cd /c/Users/prajmane/k8s/dockerwebapp'
+                sh 'ls'
+            }
+        }
+    }
+}
+
 node {
     
     checkout scm
